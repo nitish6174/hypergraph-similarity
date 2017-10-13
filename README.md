@@ -1,2 +1,2 @@
-# hypergraph-similarity
-Finding near-duplicate hypergraphs using similarity calculation
+# Hypergraph similarity
+Finding near-duplicate hypergraphs using similarity calculation.
