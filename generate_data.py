@@ -6,7 +6,7 @@ import random
 # Constants
 MIN_VERTICES = 5
 MAX_VERTICES = 100
-NUM_HYPERGRAPHS = 100
+NUM_HYPERGRAPHS = 2
 data_file = "data/generated_hypergraphs.json"
 
 
