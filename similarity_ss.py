@@ -3,10 +3,12 @@ import numpy as np
 import copy
 import collections
 import hashlib
+from bktree import BKTree
 
 
 EPSILON = 0.0001
 F = 128
+MAX_DISTANCE = 32
 
 def hashfunc(x):
     return int(hashlib.md5(x).hexdigest(), 16)
@@ -133,7 +135,31 @@ if __name__ == '__main__':
             features[i][str1] = qualityEdges[i][j]
 
 
+    values = [build_by_features(features[i]) for i in range(l)]
+    valuesRevDict = {}
+
+    for i in range(len(values)):
+        if values[i] in valuesRevDict:
+            valuesRevDict[values[i]].append(i)
+        else:
+            valuesRevDict[values[i]] = [i]
+
+    tree = BKTree()
+
+    for value in values:
+        tree.add(value)
+
+    # for i in range(l):
+    #     for j in range(i+1,l):
+    #         score = computeScore(values[i], values[j])
+    #         print str(graphs[i]["label"]) + " " + str(graphs[j]["label"]) + " " + str(score)
+
     for i in range(l):
-        for j in range(i+1,l):
-            score = computeScore(build_by_features(features[i]), build_by_features(features[j]))
-            print str(graphs[i]["label"]) + " " + str(graphs[j]["label"]) + " " + str(score)
+        closest_pairs = tree.find(values[i],MAX_DISTANCE)
+        final_pairs = []
+        for pair in closest_pairs:
+            a,b = pair
+            a = 1 - float(a)/F
+            b = valuesRevDict[b]
+            final_pairs.append((a,b))
+        print str(i) + " " + str(final_pairs)
