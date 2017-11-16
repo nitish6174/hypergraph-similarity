@@ -33,6 +33,14 @@ def computeQualityPageRank(graph):
 				pageRankMatrix[edge[i]][edge[j]]+=1
 				pageRankMatrix[edge[j]][edge[i]]+=1
 
+	 for i in range(len(pageRankMatrix)):
+        totalsum = sum(pageRankMatrix[i])
+        if totalsum !=0:
+            for j in range(len(pageRankMatrix)):
+                pageRankMatrix[i][j]= float(pageRankMatrix[i][j])/totalsum
+               
+        
+
 
 	scorestemp = np.zeros((l))
 	graphT = np.transpose(pageRankMatrix)
